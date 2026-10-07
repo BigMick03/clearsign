@@ -1,0 +1,29 @@
+{
+  "name": "clearsign-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r run build",
+    "lint": "pnpm -r run lint",
+    "format:check": "pnpm -r run format:check",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "test:coverage": "pnpm -r run test:coverage",
+    "test:integration": "pnpm -r run test:integration"
+  },
+  "devDependencies": {
+    "typescript": "5.6.2",
+    "@types/node": "22.5.5",
+    "vitest": "2.1.1",
+    "@vitest/coverage-v8": "2.1.1",
+    "typescript-eslint": "8.6.0",
+    "eslint": "9.10.0",
+    "prettier": "3.3.3",
+    "tsup": "8.3.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
