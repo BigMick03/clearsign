@@ -13,3 +13,12 @@
 - Wrote and passed comprehensive unit tests covering malformed base64, incorrect network passphrase, expired time bounds, and classic operations.
 - Handled Muxed account parsing via `MuxedAccount` and `baseAccount`.
 - Pushed Phase 1 commit to github.
+
+## Phase 2
+- Created `types.ts` defining `DisplayValue`, `DecodedArg`, and `Invocation`.
+- Built `spec.ts` to fetch Wasm and parse `contract.Spec` with in-memory LRU caching per `networkPassphrase` + `wasmHash`.
+- Added support for built-in SEP-41 SAC parsing without needing a network Spec.
+- Implemented `scval.ts` robust AST decoder supporting full recursive `ScVal` to Native and `DisplayValue` mapped decoding, with protection against nested attacks via depth checks.
+- Wrote `invocation.ts` to decode `invokeHostFunction` payloads against the parsed specs, extracting types and reporting type mismatches or unknown methods gracefully.
+- All 25 Phase 2 tests passed on Vitest.
+- Pushed Phase 2 commits to github.
