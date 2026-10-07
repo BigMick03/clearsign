@@ -2,13 +2,13 @@
   "name": "@clearsign/react",
   "version": "0.1.0",
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
     "./styles.css": "./dist/index.css"
@@ -29,8 +29,11 @@
     "@testing-library/react": "^16.0.1",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
+    "axe-core": "^4.10.0",
     "jsdom": "^25.0.1",
-    "vitest-axe": "^0.1.0",
-    "axe-core": "^4.10.0"
+    "vitest-axe": "^0.1.0"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^17.2.1"
   }
 }

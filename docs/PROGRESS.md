@@ -29,3 +29,10 @@
 - Exported all core modules through `index.ts`.
 - 100% test pass rate for new logic (29/29 total tests passing for core).
 - Committed Phase 3 to github.
+
+## Phase 4
+- Built `ClearSignProvider` React context to supply RPC and Network configs to child components.
+- Developed the `useClearSign` hook for decoding envelopes and their internal contract invocations synchronously.
+- Developed the `useSimulateTransaction` hook which queries the RPC server, executes the payload, and dynamically decodes resulting diagnostic events and ledger state mutations seamlessly into human-readable objects.
+- Integrated Vitest with `jsdom` and React Testing Library to validate the components.
+- Pushed Phase 4 to github.

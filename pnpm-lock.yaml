@@ -44,6 +44,9 @@ importers:
       '@clearsign/core':
         specifier: workspace:*
         version: link:../core
+      '@stellar/stellar-sdk':
+        specifier: ^17.2.1
+        version: 17.2.1(debug@4.4.3(supports-color@7.2.0))(supports-color@7.2.0)
       react:
         specifier: ^18.0.0 || ^19.0.0
         version: 19.3.0

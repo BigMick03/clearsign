@@ -23,7 +23,7 @@ export async function decodeInvocation(
   if (funcSwitch === 'hostFunctionTypeInvokeContract') {
     const invokeArgs = func.value;
     const contractId = Address.fromScAddress(invokeArgs.contractAddress).toString();
-    const functionName = invokeArgs.functionName.toString('utf8');
+    const functionName = typeof invokeArgs.functionName === 'string' ? invokeArgs.functionName : Buffer.from(invokeArgs.functionName as any).toString('utf8');
     const args = invokeArgs.args;
 
     const specResult = await loadSpec(contractId, opts);
@@ -60,7 +60,7 @@ export async function decodeInvocation(
         }
         decodedArgs = args.map((arg, i) => {
           const input = inputs[i];
-          const name = input ? input.name.toString('utf8') : null;
+          const name = input ? (typeof input.name === 'string' ? input.name : Buffer.from(input.name as any).toString('utf8')) : null;
           const typeDef = input ? input.type : null;
           
           if (typeDef) {
@@ -113,10 +113,10 @@ export async function decodeInvocation(
        if (createArgs.contractIdPreimage.type === 'contractIdPreimageFromAddress') {
           const preImg = createArgs.contractIdPreimage.value;
           deployer = Address.fromScAddress(preImg.address).toString();
-          salt = preImg.salt.toString('hex');
+          salt = Buffer.from(preImg.salt as any).toString('hex');
        }
        if (createArgs.executable.type === 'contractExecutableWasm') {
-          executable = createArgs.executable.value.toString('hex');
+          executable = Buffer.from(createArgs.executable.value as any).toString('hex');
        } else if (createArgs.executable.type === 'contractExecutableStellarAsset') {
           executable = 'Stellar Asset';
        }
@@ -126,10 +126,10 @@ export async function decodeInvocation(
        if (createArgs.contractIdPreimage.type === 'contractIdPreimageFromAddress') {
           const preImg = createArgs.contractIdPreimage.value;
           deployer = Address.fromScAddress(preImg.address).toString();
-          salt = preImg.salt.toString('hex');
+          salt = Buffer.from(preImg.salt as any).toString('hex');
        }
        if (createArgs.executable.type === 'contractExecutableWasm') {
-          executable = createArgs.executable.value.toString('hex');
+          executable = Buffer.from(createArgs.executable.value as any).toString('hex');
        } else if (createArgs.executable.type === 'contractExecutableStellarAsset') {
           executable = 'Stellar Asset';
        }
@@ -151,7 +151,7 @@ export async function decodeInvocation(
   } else if (funcSwitch === 'hostFunctionTypeUploadContractWasm') {
     warnings.push({ code: 'WASM_UPLOAD', message: 'Transaction uploads contract code' });
     const wasmBytes = func.value;
-    const wasmHash = hash(wasmBytes).toString('hex');
+    const wasmHash = Buffer.from(hash(wasmBytes) as any).toString('hex');
     return {
       invocation: {
         contractId: 'Upload',

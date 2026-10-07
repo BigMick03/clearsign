@@ -22,7 +22,7 @@ export async function decodeEvent(
 
   let contractId: string | null = null;
   if (event.contractId) {
-    contractId = StrKey.encodeContract(event.contractId);
+    contractId = StrKey.encodeContract(new Uint8Array(event.contractId as any));
   }
 
   let type: 'system' | 'contract' | 'diagnostic' | 'unknown' = 'unknown';
@@ -51,7 +51,7 @@ export async function decodeEvent(
       // Find matching event in spec
       const events = spec.events();
       for (const e of events) {
-        const entry = e.value; // scSpecEntryEventV0
+        const entry = (e as any).value || e; // scSpecEntryEventV0
         const topicsDefs = entry.topics;
         const dataDef = entry.data;
 
@@ -61,13 +61,13 @@ export async function decodeEvent(
           let match = true;
           for (let i = 0; i < topicsDefs.length; i++) {
             const defType = topicsDefs[i].type;
-            const valType = topicsScVal[i].type;
+            const valType = topicsScVal[i]?.type;
             // A basic check: if def says it's a symbol and it is a symbol, it's a potential match.
             // A perfect match would decode the first topic and compare it to the event name?
             // Actually, Soroban events don't strictly require the first topic to be the name, but usually it is.
             // Spec `parseEvent` matches strictly. We can do a loose match or just take the first that matches types.
             const defName = defType.replace('scSpecType', '').toLowerCase();
-            const valName = valType.replace('scv', '').toLowerCase();
+            const valName = valType?.replace('scv', '').toLowerCase();
             if (defName === 'symbol' && valName !== 'symbol') {
               match = false;
               break;
@@ -90,8 +90,8 @@ export async function decodeEvent(
     return res.value;
   });
 
-  if (!eventName && topics.length > 0 && topics[0].kind === 'symbol') {
-    eventName = topics[0].value;
+  if (!eventName && topics.length > 0 && topics[0]?.kind === 'symbol') {
+    eventName = (topics[0] as any).value;
   }
 
   const dataRes = decodeScVal(dataScVal, spec, dataType);

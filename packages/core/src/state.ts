@@ -27,7 +27,7 @@ export async function decodeLedgerEntry(
   let specSource: 'wasm' | 'injected' | 'sac-builtin' | 'none' = 'none';
 
   if (entryType === 'contractData') {
-    const contractData = data;
+    const contractData = data as xdr.ContractDataEntry;
     const contractHash = contractData.contract;
     
     if (contractHash) {
